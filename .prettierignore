@@ -1,0 +1,11 @@
+node_modules
+public
+coverage/
+dist
+.vscode
+
+.eslintignore
+yarn.lock
+package-lock.json
+*.html
+*.md
