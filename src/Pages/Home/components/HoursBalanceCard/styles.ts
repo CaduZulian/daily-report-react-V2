@@ -18,7 +18,7 @@ export const CardsGroup = styled.div`
 export const WorkedHoursCard = styled.span`
   display: flex;
 
-  background-color: ${({ theme }) => theme.palette.background.darkGreen};
+  background-color: ${({ theme }) => theme.palette.background.darkBlue};
   color: ${({ theme }) => theme.palette.text.light};
 
   padding: 0.5rem;
@@ -31,7 +31,7 @@ export const WorkedHoursCard = styled.span`
 export const ExpectedHoursCard = styled.span`
   display: flex;
 
-  color: ${({ theme }) => theme.palette.background.darkGreen};
+  color: ${({ theme }) => theme.palette.background.darkBlue};
 
   padding: 0.5rem;
   border-radius: 2rem;

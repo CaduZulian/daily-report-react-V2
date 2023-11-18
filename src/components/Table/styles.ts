@@ -39,7 +39,7 @@ export const Container = styled.div<{ maxHeight?: number }>`
 `;
 
 export const TableStyled = styled.table`
-border: none;
+  border: none;
   border-collapse: collapse;
   margin: 0;
 `;
@@ -54,7 +54,7 @@ export const TBodyStyled = styled.tbody`
   tr {
     transition: all 0.2s ease-in;
 
-    :hover {
+    &:hover {
       background-color: ${({ theme }) => `${theme.palette.background.light}dd`};
     }
   }

@@ -22,9 +22,7 @@ export const CheckBoxContainer = styled.div<{
 
     border-radius: 50%;
     background: ${({ theme, check }) =>
-      check
-        ? theme.palette.background.darkGreen
-        : theme.palette.text.lightGray};
+      check ? theme.palette.background.darkBlue : theme.palette.text.lightGray};
 
     > svg {
       width: 50%;
@@ -35,7 +33,6 @@ export const CheckBoxContainer = styled.div<{
   > p.check-text {
     margin-left: 0.5rem;
 
-    font-family: sans-serif;
     font-size: 1rem;
     line-height: 140%;
 

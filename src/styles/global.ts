@@ -3,15 +3,24 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default createGlobalStyle`
     :root {
-        --main-green: #34D0A8;
-        --main-blue: #070B15;
-        
-        --action-green: #44AE93;
+        --main-primary: #2b879e;
+        --main-secondary: #061013;
+
+        --action-primary: #19515E; 
+
+        --background-white: #FFFFFF; 
+        --background-light: #F3F5F7; 
+        --background-light-gray: #E9E9E9; 
+        --background-light-blue: #E9EFFC; 
+        --background-dark-blue: #19515E; 
 
         --text-light: #FFFFFF;
-        --text-light-gray: #9E9E9E;
+        --text-light-gray: #DFDFDF;
+        --text-gray: #9E9E9E;
         --text-dark-gray: #5A5A5A;
         --text-dark: #111111;
+
+        --border-light: #DDE3E9;
 
         --status-blue:  #2D61E1;
         --status-light-blue: #F1F5FD;
@@ -21,23 +30,6 @@ export default createGlobalStyle`
         --status-light-red: #FFF0EF;
         --status-orange: #AD6500;
         --status-light-orange: #FCF7E9;
-
-        --border-light: #DDE3E9;
-
-        --background-light: #F3F5F7;
-        --background-radial: radial-gradient(80.22% 129.52% at 49.85% 152.29%, #223667 0%, #090E1B 100%);
-        --background-white: #FFFFFF;
-
-        --opacity-green: rgba(52, 208, 168, 0.25);
-        --opacity-yellow: rgba(208, 164, 52, 0.25);
-        
-        --blue-100: #DDE3E9;
-        --blue-200: #818798;
-        --blue-400: #222939;
-        --blue-500: #142348;
-        --blue-800: #0D1426;
-
-        --notification-red: #D52115;
 
         --toastify-color-light: #fff;
         --toastify-color-dark: #121212;
@@ -53,16 +45,16 @@ export default createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
         
-        font-family: sans-serif;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    span, strong, p, h1, h2, h3, h4, h5, h6, button, input, textarea, label {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
     }
 
     input:focus, textarea:focus {
         outline: 0;
-    }
-
-    body, input, textarea, button {
-        font-family: sans-serif;
-        font-weight: 400;
     }
 
     body { 

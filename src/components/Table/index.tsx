@@ -158,7 +158,7 @@ export const Table: React.FC<ITable> = ({
                       })}
 
                       {(onDownload || customActions) && (
-                        <td>
+                        <Column>
                           <div className='actions'>
                             {onDownload && (
                               <button
@@ -168,7 +168,7 @@ export const Table: React.FC<ITable> = ({
                                 onClick={() => onDownload(row)}
                               >
                                 <FaDownload
-                                  color={theme.palette.action.green}
+                                  color={theme.palette.action.primary}
                                 />
                               </button>
                             )}
@@ -189,7 +189,7 @@ export const Table: React.FC<ITable> = ({
                                 },
                               )}
                           </div>
-                        </td>
+                        </Column>
                       )}
                     </>
                   </Row>

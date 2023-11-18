@@ -64,8 +64,8 @@ export const HoursBalanceCard = () => {
     datasets: [
       {
         backgroundColor: [
-          theme.palette.action.green,
-          `${theme.palette.action.green}90`,
+          theme.palette.action.primary,
+          `${theme.palette.action.primary}90`,
         ],
       },
     ],

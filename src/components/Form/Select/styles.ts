@@ -44,7 +44,7 @@ export const SelectInput = styled(Select)<{ hasError?: boolean }>`
 
     &--is-focused {
       border-color: ${({ hasError, theme }) =>
-        hasError ? theme.palette.status.red : theme.palette.main.green};
+        hasError ? theme.palette.status.red : theme.palette.main.primary};
       box-shadow: none;
 
       @media screen and (min-width: 768px) {
@@ -94,7 +94,7 @@ export const SelectInput = styled(Select)<{ hasError?: boolean }>`
     background-color: ${({ theme }) => theme.palette.background.white};
 
     &--is-selected {
-      background-color: ${({ theme }) => theme.palette.main.green};
+      background-color: ${({ theme }) => theme.palette.main.primary};
     }
 
     @media screen and (min-width: 768px) {
@@ -106,7 +106,7 @@ export const SelectInput = styled(Select)<{ hasError?: boolean }>`
   }
 
   .react-select__multi-value__label {
-    background: ${({ theme }) => theme.palette.main.green};
+    background: ${({ theme }) => theme.palette.main.primary};
     color: ${({ theme }) => theme.palette.background.white};
   }
   .react-select__multi-value__remove {

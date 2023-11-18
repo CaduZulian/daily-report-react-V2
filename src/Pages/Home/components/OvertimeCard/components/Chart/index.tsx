@@ -103,7 +103,7 @@ export const Chart = ({ currentPeriod }: IChart) => {
         data: getData(),
         borderColor: `#0000`,
         fill: {
-          above: theme.palette.action.green,
+          above: theme.palette.action.primary,
           below: theme.palette.status.red,
           target: { value: 0 },
         },

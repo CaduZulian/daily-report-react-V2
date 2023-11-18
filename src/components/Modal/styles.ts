@@ -86,7 +86,6 @@ export const CloseButton = styled.button`
 `;
 
 export const ModalTitle = styled.h2`
-  font-family: sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 1.5rem;

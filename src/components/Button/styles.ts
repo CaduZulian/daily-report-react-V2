@@ -7,7 +7,7 @@ export const StyledButton = styled.button`
   border-radius: 0.25rem;
   height: 2.5rem;
 
-  background-color: ${({ theme }) => theme.palette.background.darkGreen};
+  background-color: ${({ theme }) => theme.palette.background.darkBlue};
 
   border: none;
   padding: 0 1rem;
@@ -20,6 +20,6 @@ export const StyledButton = styled.button`
   transition: all 0.2s ease-in;
 
   :hover {
-    background-color: ${({ theme }) => theme.palette.hover.darkGreen};
+    background-color: ${({ theme }) => theme.palette.action.primary};
   }
 `;

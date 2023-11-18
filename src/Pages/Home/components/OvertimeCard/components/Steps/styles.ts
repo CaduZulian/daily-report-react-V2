@@ -22,7 +22,7 @@ export const BackgroundButtons = styled.div`
 
   z-index: 1;
 
-  background-color: ${({ theme }) => theme.palette.background.darkGreen};
+  background-color: ${({ theme }) => theme.palette.background.darkBlue};
   color: transparent;
 
   transition: all 0.2s ease-in;
@@ -42,5 +42,5 @@ export const StepButtons = styled.button<{ active: boolean }>`
 
   background-color: transparent;
   color: ${({ theme, active }) =>
-    active ? theme.palette.text.light : theme.palette.background.darkGreen};
+    active ? theme.palette.text.light : theme.palette.background.darkBlue};
 `;
