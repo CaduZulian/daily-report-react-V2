@@ -13,7 +13,7 @@ import {
 import { Button } from '../Button';
 import { ModalDownloadReport } from './components/ModalDownloadReport';
 
-import LogoIcon from '@/assets/icons/logo.png';
+import LogoIcon from '@/assets/icons/logo.svg';
 
 import { useAuth } from '@/context';
 

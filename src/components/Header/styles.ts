@@ -8,7 +8,7 @@ export const HeaderContainerStyled = styled.header`
   height: fit-content;
   background-color: ${({ theme }) => theme.palette.main.secondary};
 
-  padding: 1rem;
+  padding: 1rem 2rem;
 
   div.container {
     display: flex;

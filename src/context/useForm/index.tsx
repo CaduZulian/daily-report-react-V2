@@ -1,10 +1,11 @@
-import { download } from '@/hooks/download';
+import { download } from '@/utils/download';
 import { addHours, format } from 'date-fns';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 // types
-import { DailyReport, IForm } from './models';
+import { IForm } from './models';
+import { DailyReport } from '@/@types';
 
 const FormContext = createContext({} as IForm);
 

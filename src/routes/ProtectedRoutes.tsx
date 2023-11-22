@@ -1,5 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/context/useAuth';
+import { useMemo } from 'react';
+import { getSignedUser } from '@/utils';
 
 export const ProtectedRoute = ({
   hasSigned,
@@ -10,13 +12,17 @@ export const ProtectedRoute = ({
 }) => {
   const { user } = useAuth();
 
+  const signedUser = useMemo(() => {
+    return user || getSignedUser();
+  }, [JSON.stringify(user)]);
+
   if (hasSigned) {
-    if (!user) {
+    if (!signedUser) {
       // user is not authenticated
       return <Navigate to='/auth/login' />;
     }
   } else {
-    if (user) {
+    if (signedUser) {
       return <Navigate to='/home' />;
     }
   }

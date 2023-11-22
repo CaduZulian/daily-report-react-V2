@@ -12,10 +12,20 @@ import {
 
 // context
 import { useDownload } from '@/context';
-import { DailyReport } from '@/context/useForm/models';
+
+import { DailyReport } from '@/@types';
+import { useUser } from '@/hooks';
+import { getSignedUser } from '@/utils';
 
 export const HoursBalanceCard = () => {
+  const signedUser = getSignedUser();
+
   const { getDaysOfMonth, getDaysOfWeek } = useDownload();
+  const { useGetUserById } = useUser();
+
+  const getUserById = useGetUserById({
+    userId: signedUser?.id,
+  });
 
   function getData(type: string) {
     let dates: string[] = [];
@@ -29,9 +39,9 @@ export const HoursBalanceCard = () => {
     let totalHours = 0;
 
     if (type === 'weekly') {
-      totalHours = 40;
+      totalHours = getUserById.data?.metadata.hoursInMonth || 40;
     } else if (type === 'monthly') {
-      totalHours = 168;
+      totalHours = getUserById.data?.metadata.hoursInMonth || 168;
     }
 
     let millisecondsDone = 0;

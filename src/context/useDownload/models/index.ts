@@ -1,4 +1,4 @@
-import { DailyReport } from '@/context/useForm/models';
+import { DailyReport } from '@/@types';
 
 export interface IDownloadOfPeriod {
   downloadFunction: (props: DailyReport) => void;

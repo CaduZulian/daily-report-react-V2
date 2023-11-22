@@ -1,11 +1,4 @@
-export interface DailyReport {
-  currentDate: string;
-  entry: Array<{ horary: string }>;
-  leaves: Array<{ horary: string }>;
-  hoursInDay?: number;
-  reportedActivities?: string;
-  comments?: string;
-}
+import { DailyReport } from '@/@types';
 
 export interface IForm {
   reportsInDay: DailyReport | null;

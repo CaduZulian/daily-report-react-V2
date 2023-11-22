@@ -1,22 +1,28 @@
 import { createContext, useContext, useLayoutEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { AuthProviderProps, IAuthContext, IUser } from './models';
-
 import { localStorageKeys } from '@/data';
 
 import { firebaseAuth } from '@/services';
+import { useUser } from '@/hooks';
+
+import { ISignedUser } from '@/@types';
+import { AuthProviderProps, IAuthContext } from './models';
 
 const AuthContext = createContext({} as IAuthContext);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<IUser>();
+  const [user, setUser] = useState<ISignedUser>();
+
+  const { usePostCreateUser } = useUser();
+
+  const { createUser } = usePostCreateUser();
 
   useLayoutEffect(() => {
     const userStorage = localStorage.getItem(localStorageKeys.USER);
 
     if (userStorage) {
-      const userLogged = JSON.parse(userStorage) as IUser;
+      const userLogged = JSON.parse(userStorage) as ISignedUser;
 
       setUser(userLogged);
     }
@@ -47,10 +53,23 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
       localStorage.setItem(localStorageKeys.USER, JSON.stringify(user));
 
+      await createUser({
+        data: {
+          userId: uid,
+          metadata: {
+            dailyHours: 8,
+            lunchHours: 1,
+            weeklyHours: 40,
+            monthlyHours: 160,
+          },
+        },
+      });
+
       setUser({
         id: uid,
         name: displayName,
         avatar: photoURL,
+        email: result.user.email || '',
       });
     }
   };
@@ -62,6 +81,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.removeItem(localStorageKeys.USER);
 
     setUser(undefined);
+
+    toast.success('Logout realizado com sucesso.');
   };
 
   return (

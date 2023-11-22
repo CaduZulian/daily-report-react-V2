@@ -9,7 +9,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 
 // pages
-import { Login, Home, ToClockIn } from './Pages';
+import { Login, Home, ToClockIn, Profile } from './Pages';
 import { AuthLayout, DefaultLayout } from './Pages/_Layouts';
 
 // providers
@@ -43,6 +43,7 @@ function App() {
                   <ProtectedRoute hasSigned={true}>
                     <DefaultLayout>
                       <Routes>
+                        <Route path='/perfil' element={<Profile />} />
                         <Route path='/home' element={<Home />} />
                         <Route path='/bater-ponto' element={<ToClockIn />} />
                         <Route path='*' element={<Navigate to='/home' />} />
