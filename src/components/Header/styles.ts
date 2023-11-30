@@ -5,15 +5,19 @@ export const HeaderContainerStyled = styled.header`
   justify-content: center;
   align-items: center;
 
-  height: fit-content;
-  background-color: ${({ theme }) => theme.palette.main.secondary};
+  position: relative;
 
-  padding: 1rem 2rem;
+  width: 100%;
+  height: fit-content;
+  background-color: ${({ theme }) => theme.palette.main.primary};
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   div.container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem 2rem;
 
     width: 100%;
 
@@ -33,9 +37,10 @@ export const LogoStyled = styled.div`
     height: 2.5rem;
   }
 
-  span {
-    font-weight: 500;
-    font-size: 1.5rem;
+  h1 {
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 150%;
 
     color: ${({ theme }) => theme.palette.text.light};
   }
@@ -65,36 +70,14 @@ export const ProfileButtonStyled = styled.button<{ menuIsOpen: boolean }>`
   transition: all 0.2s ease-in;
 
   img {
-    height: 2rem;
-    width: 2rem;
+    height: 2.5rem;
+    width: 2.5rem;
 
     border-radius: 50%;
   }
 
   &:hover {
     filter: opacity(0.85);
-  }
-
-  .close-menu {
-    display: ${({ menuIsOpen }) => (menuIsOpen ? 'flex' : 'none')};
-    align-items: center;
-    justify-content: center;
-
-    position: absolute;
-
-    height: 100%;
-    width: 100%;
-
-    background-color: ${({ theme }) =>
-      theme.palette.background.lightGray + '80'};
-    border-radius: 50%;
-
-    svg {
-      height: 1.5rem;
-      width: 1.5rem;
-
-      color: ${({ theme }) => theme.palette.text.dark};
-    }
   }
 `;
 
@@ -106,8 +89,8 @@ export const ProfileMenuStyled = styled.div<{ open: boolean }>`
   z-index: 9;
 
   position: absolute;
-  top: 4rem;
-  right: 1rem;
+  top: 4.5rem;
+  right: 2rem;
 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
@@ -124,7 +107,7 @@ export const ProfileMenuStyled = styled.div<{ open: boolean }>`
 
     position: absolute;
     top: -0.25rem;
-    right: 0.75rem;
+    right: calc(2rem / 2);
 
     width: 0.5rem;
     height: 0.5rem;

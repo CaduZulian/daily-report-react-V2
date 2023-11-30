@@ -9,6 +9,9 @@ export const ContainerStyled = styled.section`
   padding: 2rem;
   gap: 2rem;
 
+  // for ultra wide monitors
+  max-width: 2000px;
+
   hr {
     width: 100%;
 

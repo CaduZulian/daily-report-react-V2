@@ -5,7 +5,7 @@ export const ContainerStyled = styled.main`
   width: 100vw;
   height: 100vh;
 
-  background: ${({ theme }) => theme.palette.background.lightGray};
+  background: ${({ theme }) => theme.palette.background.white};
 `;
 
 export const LeftSideStyled = styled.section`
@@ -19,7 +19,7 @@ export const LeftSideStyled = styled.section`
 
   gap: 1rem;
 
-  background: ${({ theme }) => theme.palette.background.darkBlue};
+  background: ${({ theme }) => theme.palette.main.primary};
 
   h1 {
     font-size: 2rem;

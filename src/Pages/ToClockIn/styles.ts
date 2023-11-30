@@ -5,8 +5,8 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
 
-  padding: 1.25rem;
-  gap: 1rem;
+  padding: 2rem;
+  gap: 2rem;
 
   // for ultra wide monitors
   max-width: 2000px;

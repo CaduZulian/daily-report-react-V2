@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { IoClose } from 'react-icons/io5';
 
 import {
   ButtonsGroupStyled,
@@ -10,7 +9,7 @@ import {
   ProfileMenuStyled,
 } from './styles';
 
-import { Button } from '../Button';
+import { LinkButton } from '@/components';
 import { ModalDownloadReport } from './components/ModalDownloadReport';
 
 import LogoIcon from '@/assets/icons/logo.svg';
@@ -52,17 +51,17 @@ export const Header = () => {
         <Link to='/home'>
           <LogoStyled>
             <img src={LogoIcon} alt='logo' />
-            <span>Relatório diário</span>
+            <h1>Relatório diário</h1>
           </LogoStyled>
         </Link>
 
         <ButtonsGroupStyled>
-          <Button onClick={() => setModalDownloadReportIsOpen(true)}>
-            Baixar relatório
-          </Button>
+          <LinkButton onClick={() => setModalDownloadReportIsOpen(true)}>
+            Importar/exportar base
+          </LinkButton>
 
           <Link to='/bater-ponto'>
-            <Button tabIndex={-1}>Bater ponto</Button>
+            <LinkButton tabIndex={-1}>Bater ponto</LinkButton>
           </Link>
 
           <ProfileButtonStyled
@@ -71,10 +70,6 @@ export const Header = () => {
             onClick={() => setProfileMenuIsOpen((prevState) => !prevState)}
           >
             <img src={user?.avatar} alt='avatar' />
-
-            <div className='close-menu'>
-              <IoClose />
-            </div>
           </ProfileButtonStyled>
         </ButtonsGroupStyled>
       </div>
@@ -90,7 +85,11 @@ export const Header = () => {
 
         <div className='profile-actions'>
           <Link to='/perfil'>
-            <button>Minha conta</button>
+            <button
+              onClick={() => setProfileMenuIsOpen((prevState) => !prevState)}
+            >
+              Minha conta
+            </button>
           </Link>
 
           <button className='sign-out' onClick={() => signOut()}>

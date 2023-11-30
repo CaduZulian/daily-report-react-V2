@@ -5,8 +5,8 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
 
-  padding: 1.25rem;
-  gap: 1rem;
+  padding: 2rem;
+  gap: 2rem;
 
   // for ultra wide monitors
   max-width: 2000px;
@@ -32,7 +32,9 @@ export const Card = styled.div`
   height: fit-content;
 
   background-color: ${({ theme }) => theme.palette.background.white};
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
+
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 
   padding: 1.25rem;
   gap: 1rem;

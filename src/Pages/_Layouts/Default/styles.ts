@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const MainStyled = styled.main`
   display: flex;
   width: 100vw;
-  height: calc(100vh - 72px);
+  height: calc(100vh - 80px);
   background: ${({ theme }) => theme.palette.background.lightGray};
 
   justify-content: center;
