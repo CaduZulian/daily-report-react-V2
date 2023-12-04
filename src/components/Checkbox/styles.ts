@@ -17,8 +17,8 @@ export const CheckBoxContainer = styled.div<{
     justify-content: center;
     align-items: center;
 
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
 
     border-radius: 50%;
     background: ${({ theme, check }) =>

@@ -1,27 +1,17 @@
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import * as S from './styles';
 
-interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
-  name: string;
-  label?: string;
-  className?: string;
-  required?: boolean;
-  autoFocus?: boolean;
-  disabled?: boolean;
-  value?: string;
-  type?: string;
-}
+import { InputProps } from './models';
 
-const Input: React.FC<InputProps> = ({
+export const Input = ({
   name,
   label,
   className,
   required,
   autoFocus,
   ...rest
-}) => {
+}: InputProps) => {
   const {
     register,
     formState: { errors },
@@ -42,5 +32,3 @@ const Input: React.FC<InputProps> = ({
     </S.Container>
   );
 };
-
-export default Input;

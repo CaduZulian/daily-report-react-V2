@@ -2,7 +2,11 @@ import styled, { css } from 'styled-components';
 import Select from 'react-select';
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
+
+  gap: 0.25rem;
 `;
 
 export const LabelContainer = styled.div`
@@ -10,8 +14,6 @@ export const LabelContainer = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   width: 100%;
-
-  margin-bottom: 5px;
 `;
 
 export const Label = styled.label`
@@ -21,15 +23,15 @@ export const Label = styled.label`
 `;
 
 export const Required = styled.span`
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 150%;
   color: #9e9e9e;
 `;
 
 export const SelectInput = styled(Select)<{ hasError?: boolean }>`
   .react-select__control {
-    min-height: 40px;
-    border-radius: 8px;
+    min-height: 2.5rem;
+    border-radius: 0.5rem;
     border-size: 1px;
     border-color: ${({ hasError, theme }) =>
       hasError ? theme.palette.status.red : theme.palette.border.light};
@@ -57,7 +59,7 @@ export const SelectInput = styled(Select)<{ hasError?: boolean }>`
     }
 
     .react-select__value-container {
-      padding: 0 14px;
+      padding: 0 0.875rem;
 
       .react-select__single-value {
         color: #000000;
@@ -70,7 +72,7 @@ export const SelectInput = styled(Select)<{ hasError?: boolean }>`
   }
 
   .react-select__indicator {
-    padding: 5px;
+    padding: 0.25rem;
 
     ${({ hasError, theme }) =>
       hasError &&

@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { FaCheck } from 'react-icons/fa';
+
 import { CheckBoxContainer } from './styles';
 
-interface ICheckbox {
-  checked: boolean;
-  disabled: boolean;
-  onClick: (event: boolean) => void;
-  label?: string;
-}
+import { CheckboxProps } from './models';
 
-export const Checkbox = ({ checked, disabled, onClick, label }: ICheckbox) => {
+export const Checkbox = ({
+  checked,
+  disabled,
+  onClick,
+  label,
+}: CheckboxProps) => {
   useEffect(() => {
     if (disabled && checked) {
       onClick(false);
@@ -22,7 +23,7 @@ export const Checkbox = ({ checked, disabled, onClick, label }: ICheckbox) => {
       check={checked}
       disabled={disabled}
       onClick={() => !disabled && onClick(!checked)}
-      onKeyPress={(e) => e.key === 'Enter' && !disabled && onClick(!checked)}
+      onKeyDown={(e) => e.key === 'Enter' && !disabled && onClick(!checked)}
     >
       <div className='checkbox'>{checked && <FaCheck />}</div>
       <p className='check-text'>{label}</p>

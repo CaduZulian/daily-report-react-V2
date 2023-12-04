@@ -9,10 +9,10 @@ import {
   ProfileMenuStyled,
 } from './styles';
 
-import { LinkButton } from '@/components';
-import { ModalDownloadReport } from './components/ModalDownloadReport';
-
 import LogoIcon from '@/assets/icons/logo.svg';
+
+import { LinkButton } from '@/components';
+import { ImportExportReportModal } from './components';
 
 import { useAuth } from '@/context';
 
@@ -23,7 +23,7 @@ export const Header = () => {
   const { user, signOut } = useAuth();
 
   const [profileMenuIsOpen, setProfileMenuIsOpen] = useState(false);
-  const [modalDownloadReportIsOpen, setModalDownloadReportIsOpen] =
+  const [importExportReportModalIsOpen, setImportExportReportModalIsOpen] =
     useState(false);
 
   useEffect(() => {
@@ -56,7 +56,11 @@ export const Header = () => {
         </Link>
 
         <ButtonsGroupStyled>
-          <LinkButton onClick={() => setModalDownloadReportIsOpen(true)}>
+          <LinkButton
+            onClick={() =>
+              setImportExportReportModalIsOpen((prevState) => !prevState)
+            }
+          >
             Importar/exportar base
           </LinkButton>
 
@@ -98,9 +102,11 @@ export const Header = () => {
         </div>
       </ProfileMenuStyled>
 
-      <ModalDownloadReport
-        open={modalDownloadReportIsOpen}
-        onClose={() => setModalDownloadReportIsOpen(false)}
+      <ImportExportReportModal
+        isOpen={importExportReportModalIsOpen}
+        onClose={() =>
+          setImportExportReportModalIsOpen((prevState) => !prevState)
+        }
       />
     </HeaderContainerStyled>
   );

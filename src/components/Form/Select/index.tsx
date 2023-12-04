@@ -1,28 +1,18 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { Props as ReactSelectProps } from 'react-select';
 
 import * as S from './styles';
 
-interface SelectProps extends ReactSelectProps {
-  name: string;
-  options: Array<{ label: string; value: string }>;
-  onChange?: (option: any) => void;
-  value?: { label: string; value: string };
-  isLoading?: boolean;
-  className?: string;
-  label?: string;
-  required?: boolean;
-}
+import { SelectProps } from './models';
 
-const Select: React.FC<SelectProps> = ({
+export const Select = ({
   name,
   className,
   label,
   required,
   defaultValue,
   ...rest
-}) => {
+}: SelectProps) => {
   const {
     control,
     setValue,
@@ -62,5 +52,3 @@ const Select: React.FC<SelectProps> = ({
     </S.Container>
   );
 };
-
-export default Select;

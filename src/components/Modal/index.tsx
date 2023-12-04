@@ -1,29 +1,20 @@
-import React from 'react';
-
 import Backdrop from '@mui/material/Backdrop';
 import Fade from '@mui/material/Fade';
 
 import { Container, Content, CloseButton, ModalTitle } from './styles';
 
-import { GrClose } from 'react-icons/gr';
+import { FiX } from 'react-icons/fi';
 
-interface IModal extends React.HTMLAttributes<HTMLDivElement> {
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  children?: React.ReactElement;
-  cancellable?: boolean;
-  className?: string;
-}
+import { ModalProps } from './models';
 
-export const Modal: React.FC<IModal> = ({
-  open,
+export const Modal = ({
+  isOpen,
   onClose,
   title,
   children,
   cancellable = true,
   ...rest
-}) => {
+}: ModalProps) => {
   const handleClose = (_: any, reason: string) => {
     if (
       !cancellable &&
@@ -41,7 +32,7 @@ export const Modal: React.FC<IModal> = ({
         {...rest}
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
-        open={open}
+        open={isOpen}
         onClose={handleClose}
         closeAfterTransition
         slots={{
@@ -53,11 +44,11 @@ export const Modal: React.FC<IModal> = ({
           },
         }}
       >
-        <Fade in={open}>
+        <Fade in={isOpen}>
           <Content className={rest.className ? rest.className : 'modal-md'}>
             {cancellable && (
               <CloseButton type='button' onClick={() => onClose()}>
-                <GrClose />
+                <FiX />
               </CloseButton>
             )}
 

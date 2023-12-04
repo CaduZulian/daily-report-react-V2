@@ -1,18 +1,8 @@
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import * as S from './styles';
 
-interface ITextArea extends React.HTMLAttributes<HTMLTextAreaElement> {
-  name: string;
-  label?: string;
-  className?: string;
-  required?: boolean;
-  autoFocus?: boolean;
-  disabled?: boolean;
-  value?: string;
-  type?: string;
-}
+import { TextAreaProps } from './models';
 
 export const TextArea = ({
   name,
@@ -20,7 +10,7 @@ export const TextArea = ({
   className,
   required,
   ...rest
-}: ITextArea) => {
+}: TextAreaProps) => {
   const {
     register,
     formState: { errors },

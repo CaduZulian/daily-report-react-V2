@@ -1,21 +1,11 @@
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import * as S from './styles';
 import theme from '@/styles/theme';
 
-interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
-  name: string;
-  label?: string;
-  className?: string;
-  mask: string;
-  maskChar?: string | null;
-  required?: boolean;
-  autoFocus?: boolean;
-  disabled?: boolean;
-}
+import { InputProps } from './models';
 
-const MaskedInput: React.FC<InputProps> = ({
+export const MaskedInput = ({
   name,
   label,
   className,
@@ -23,7 +13,7 @@ const MaskedInput: React.FC<InputProps> = ({
   required,
   autoFocus,
   ...rest
-}) => {
+}: InputProps) => {
   const {
     register,
     formState: { errors },
@@ -56,5 +46,3 @@ const MaskedInput: React.FC<InputProps> = ({
     </S.Container>
   );
 };
-
-export default MaskedInput;

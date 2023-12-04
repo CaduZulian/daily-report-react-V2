@@ -26,7 +26,9 @@ export const Card = styled.div`
   position: relative;
 
   background-color: ${({ theme }) => theme.palette.background.white};
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
+
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 
   padding: 1.25rem;
   gap: 1rem;

@@ -29,7 +29,7 @@ export const Container = styled(Modal)`
 
   .label-alone {
     display: block;
-    font-size: 16px;
+    font-size: 1rem;
     color: ${({ theme }) => theme.palette.lightGray};
     margin: 20px 0;
     font-weight: 700;
@@ -57,41 +57,56 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   background: ${({ theme }) => theme.palette.background.white};
   overflow-y: auto;
 
-  padding: 24px 40px;
+  padding: 1.5rem;
+  gap: 1.5rem;
 
   @media only screen and (max-width: 1024px) {
     & {
       max-width: 95%;
       width: 95%;
       max-height: 95%;
-      height: '95%';
     }
   }
 `;
 
 export const CloseButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  top: 20px;
-  right: 20px;
+
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+
   border: 0;
   background: transparent;
 
+  border-radius: 50%;
+
+  transition: all 0.2s ease-in;
+
   svg {
-    font-size: 25px;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: ${({ theme }) => theme.palette.text.dark};
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.background.lightGray};
   }
 `;
 
-export const ModalTitle = styled.h2`
-  font-style: normal;
-  font-weight: 600;
+export const ModalTitle = styled.h3`
+  font-weight: 400;
   font-size: 1.5rem;
-  line-height: 125%;
+  line-height: 150%;
 
   text-align: center;
   color: ${({ theme }) => theme.palette.text.dark};
-  margin-bottom: 24px;
 `;

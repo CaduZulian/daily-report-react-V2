@@ -1,5 +1,9 @@
 import { StyledButton } from './styles';
 
-export const Button = ({ children, ...rest }: any) => {
-  return <StyledButton {...rest}>{children}</StyledButton>;
+export const Button = ({ children, variant = 'primary', ...rest }: any) => {
+  return (
+    <StyledButton variant={variant} {...rest}>
+      {children}
+    </StyledButton>
+  );
 };
