@@ -1,9 +1,12 @@
 import { DailyReport } from '@/@types';
 
+export type customDailyReport = Partial<
+  Omit<DailyReport, 'currentDate' | 'id' | 'createdAt' | 'updatedAt' | 'userId'>
+>;
 export interface IForm {
-  reportsInDay: DailyReport | null;
+  reportsInDay: DailyReport | undefined;
   getReportsInDay: (day: Date) => void;
   generateTxtFile: (data: DailyReport) => void;
-  uploadData: (data: Record<string, string>) => DailyReport;
+  uploadData: (data: customDailyReport) => Promise<DailyReport | undefined>;
   leaveTime: string;
 }

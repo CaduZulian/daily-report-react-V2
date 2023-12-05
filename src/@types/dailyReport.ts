@@ -6,9 +6,9 @@ export interface DailyReport {
   currentDate: Timestamp;
   entry: Array<{ horary: string }>;
   leaves: Array<{ horary: string }>;
-  hoursInDay?: number;
-  reportedActivities?: string;
-  comments?: string;
+  hoursInDay: number;
+  reportedActivities: string;
+  comments: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }

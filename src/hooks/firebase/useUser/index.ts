@@ -101,20 +101,23 @@ export const useUser = () => {
 
       const user = await getDoc(findUser);
 
-      if (user.exists()) {
-        const docRef = doc(collectionRef, id);
-
-        await updateDoc(docRef, {
-          ...rest.data,
-          updatedAt: new Date(),
-        });
-
-        const response = await getDoc(docRef);
-
-        toast.success('Usuário atualizado com sucesso!');
-
-        return response.data() as IUser;
+      if (!user.exists()) {
+        toast.error('Erro ao atualizar usuário: Usuário não existe!');
+        throw new Error('User does not exists');
       }
+
+      const docRef = doc(collectionRef, id);
+
+      await updateDoc(docRef, {
+        ...rest.data,
+        updatedAt: new Date(),
+      });
+
+      const response = await getDoc(docRef);
+
+      toast.success('Usuário atualizado com sucesso!');
+
+      return response.data() as IUser;
     };
 
     const response: IPutUpdateUserResponse = {

@@ -5,13 +5,13 @@ export interface IGetDailyReportByIdParams {
 }
 
 export interface IGetDailyReportByIdResponse {
-  data: DailyReport;
+  data: DailyReport | undefined;
 }
 
 export interface IGetDailyReportListParams {
-  filters: {
-    startDate: Date;
-    endDate: Date;
+  filters?: {
+    startDate?: Date;
+    endDate?: Date;
   };
 }
 
@@ -20,11 +20,18 @@ export interface IGetDailyReportListResponse {
 }
 
 export interface IPostCreateDailyReportParams {
-  data: Omit<DailyReport, 'id' | 'userId' | 'createdAt' | 'updatedAt'>;
+  data: Omit<
+    DailyReport,
+    'id' | 'userId' | 'createdAt' | 'updatedAt' | 'currentDate'
+  > & {
+    currentDate: Date;
+  };
 }
 
 export interface IPostCreateDailyReportResponse {
-  data: DailyReport;
+  createDailyReport: (
+    params: IPostCreateDailyReportParams,
+  ) => Promise<DailyReport | undefined>;
 }
 
 export interface IPutUpdateDailyReportParams {
@@ -33,5 +40,7 @@ export interface IPutUpdateDailyReportParams {
 }
 
 export interface IPutUpdateDailyReportResponse {
-  data: DailyReport;
+  updateDailyReport: (
+    params: IPutUpdateDailyReportParams,
+  ) => Promise<DailyReport | undefined>;
 }

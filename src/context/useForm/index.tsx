@@ -1,9 +1,10 @@
-import { download } from '@/utils/download';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { addHours, format } from 'date-fns';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
-// types
+import { useDailyReport, useUser } from '@/hooks';
+
+import { getSignedUser, download } from '@/utils';
+
 import { IForm } from './models';
 import { DailyReport } from '@/@types';
 
@@ -14,14 +15,35 @@ interface FormProviderProps {
 }
 
 const FormProvider = ({ children }: FormProviderProps) => {
-  const [reportsInDay, setReportsInDay] = useState<DailyReport | null>(null);
-  const [leaveTime, setLeaveTime] = useState('');
+  const signedUser = getSignedUser();
 
-  useEffect(() => {
+  const [filters, setFilters] = useState<{ startDate: Date; endDate: Date }>();
+
+  const { useGetUserById } = useUser();
+  const {
+    usePostCreateDailyReport,
+    usePutUpdateDailyReport,
+    useGetDailyReportList,
+  } = useDailyReport();
+
+  const getUserById = useGetUserById({ userId: signedUser?.id ?? '' });
+  const getDailyReportList = useGetDailyReportList({ filters: filters ?? {} });
+  const postCreateDailyReport = usePostCreateDailyReport();
+  const putUpdateDailyReport = usePutUpdateDailyReport();
+
+  const reportsInDay = useMemo(() => {
+    if (getDailyReportList.data.length === 1) {
+      return getDailyReportList.data[0];
+    }
+
+    return;
+  }, [JSON.stringify(getDailyReportList.data)]);
+
+  const leaveTime = useMemo(() => {
     if (reportsInDay) {
       if (reportsInDay.hoursInDay) {
         if (reportsInDay.entry.length === reportsInDay.leaves.length) {
-          setLeaveTime('');
+          return '';
         } else {
           const date = new Date().setHours(
             Number(
@@ -38,18 +60,20 @@ const FormProvider = ({ children }: FormProviderProps) => {
             0,
           );
 
-          setLeaveTime(
-            format(
-              new Date(date).getTime() +
-                ((8 + new Date().getTimezoneOffset() / 60) * 60 * 60 * 1000 -
-                  new Date(
-                    addHours(
-                      new Date(reportsInDay?.hoursInDay),
-                      new Date().getTimezoneOffset() / 60,
-                    ),
-                  ).getTime()),
-              'HH:mm',
-            ),
+          return format(
+            new Date(date).getTime() +
+              (((getUserById.data?.metadata.dailyHours ?? 8) +
+                new Date().getTimezoneOffset() / 60) *
+                60 *
+                60 *
+                1000 -
+                new Date(
+                  addHours(
+                    new Date(reportsInDay?.hoursInDay),
+                    new Date().getTimezoneOffset() / 60,
+                  ),
+                ).getTime()),
+            'HH:mm',
           );
         }
       } else {
@@ -59,20 +83,24 @@ const FormProvider = ({ children }: FormProviderProps) => {
             Number(reportsInDay.entry[0].horary.split(':')[1]),
           );
 
-          setLeaveTime(format(new Date(addHours(date, 8)), 'HH:mm'));
+          return format(
+            new Date(
+              addHours(date, getUserById.data?.metadata.dailyHours ?? 8),
+            ),
+            'HH:mm',
+          );
         }
       }
     }
-  }, [reportsInDay]);
+
+    return '';
+  }, [JSON.stringify(reportsInDay), getUserById.data?.metadata.dailyHours]);
 
   const getReportsInDay: IForm['getReportsInDay'] = (day) => {
-    const date = format(day, 'dd/MM/yyyy');
-
-    setReportsInDay(
-      localStorage.getItem(date)
-        ? JSON.parse(localStorage.getItem(date)!)
-        : null,
-    );
+    setFilters({
+      startDate: new Date(day.setHours(0, 0, 0, 0)),
+      endDate: new Date(day.setHours(23, 59, 59, 999)),
+    });
   };
 
   const generateTxtFile: IForm['generateTxtFile'] = (data) => {
@@ -126,7 +154,12 @@ const FormProvider = ({ children }: FormProviderProps) => {
 
     const blob = new Blob([fileData], { type: 'text/plain' });
 
-    return download({ blob, filename: `dia ${data.currentDate.slice(0, 2)}` });
+    return download({
+      blob,
+      filename: `dia ${new Date(data.currentDate.toDate())
+        .toLocaleDateString('pt-BR')
+        .slice(0, 2)}`,
+    });
   };
 
   function getHoursInDay(
@@ -169,8 +202,8 @@ const FormProvider = ({ children }: FormProviderProps) => {
     return result;
   }
 
-  const uploadData: IForm['uploadData'] = (data) => {
-    let formattedData: DailyReport;
+  const uploadData: IForm['uploadData'] = async (data) => {
+    let formattedData: DailyReport | undefined;
 
     const date = format(new Date(), 'dd/MM/yyyy');
     let entry: DailyReport['entry'] = [];
@@ -185,7 +218,7 @@ const FormProvider = ({ children }: FormProviderProps) => {
           { horary: format(new Date(), 'HH:mm') },
         ];
 
-        hoursInDay = getHoursInDay(entry, leaves);
+        hoursInDay = getHoursInDay(entry, leaves) ?? 0;
       } else {
         entry = [
           ...reportsInDay?.entry,
@@ -196,27 +229,33 @@ const FormProvider = ({ children }: FormProviderProps) => {
         hoursInDay = reportsInDay.hoursInDay;
       }
 
-      formattedData = {
-        ...data,
-        currentDate: reportsInDay.currentDate,
-        entry,
-        leaves,
-        hoursInDay,
-      };
+      formattedData = await putUpdateDailyReport.updateDailyReport({
+        id: reportsInDay.id,
+        data: {
+          currentDate: reportsInDay.currentDate,
+          entry,
+          leaves,
+          hoursInDay,
+          comments: data.comments ?? '',
+          reportedActivities: data.reportedActivities ?? '',
+        },
+      });
     } else {
       entry = [{ horary: format(new Date(), 'HH:mm') }];
 
-      formattedData = {
-        ...data,
-        currentDate: date,
-        entry,
-        leaves,
-      };
+      formattedData = await postCreateDailyReport.createDailyReport({
+        data: {
+          currentDate: new Date(new Date().setHours(0, 0, 0, 0)),
+          entry: data.entry ?? entry,
+          leaves: data.leaves ?? [],
+          hoursInDay: data.hoursInDay ?? 0,
+          comments: data.comments ?? '',
+          reportedActivities: data.reportedActivities ?? '',
+        },
+      });
     }
 
     localStorage.setItem(date, JSON.stringify(formattedData));
-    toast.success(`Relatório ${!reportsInDay ? 'Criado' : 'Atualizado'}!`);
-    getReportsInDay(new Date());
 
     return formattedData;
   };

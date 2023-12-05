@@ -14,9 +14,16 @@ import {
 
 // contexts
 import { useForm } from '@/context/useForm';
+import { getSignedUser } from '@/utils';
+import { useUser } from '@/hooks';
 
 export const CardDetails = () => {
+  const signedUser = getSignedUser();
+
+  const { useGetUserById } = useUser();
   const { reportsInDay, leaveTime } = useForm();
+
+  const getUserById = useGetUserById({ userId: signedUser?.id ?? '' });
 
   return (
     <Card>
@@ -24,7 +31,13 @@ export const CardDetails = () => {
         data-tooltip={
           !leaveTime
             ? 'Assim que você registrar uma nova entrada, uma sugestão de horário de saída será exibida aqui'
-            : `Para atingir as 8 horas diárias, você deverá sair as ${leaveTime}`
+            : `Para atingir as ${
+                getUserById.data?.metadata.dailyHours
+                  ? getUserById.data?.metadata.dailyHours > 1
+                    ? getUserById.data?.metadata.dailyHours + ' horas diárias'
+                    : getUserById.data?.metadata.dailyHours + ' hora diária'
+                  : '8 horas'
+              }, você deve sair às ${leaveTime}`
         }
         data-flow='bottom'
       >
@@ -32,7 +45,8 @@ export const CardDetails = () => {
       </Helper>
 
       <Title>
-        {reportsInDay?.currentDate ?? format(new Date(), 'dd/MM/yyyy')}
+        {reportsInDay?.currentDate.toDate().toLocaleDateString('pt-BR') ??
+          format(new Date(), 'dd/MM/yyyy')}
       </Title>
 
       {reportsInDay ? (
@@ -63,7 +77,7 @@ export const CardDetails = () => {
             </List>
           </CardItem>
 
-          {reportsInDay.hoursInDay && (
+          {reportsInDay.hoursInDay ? (
             <CardItem>
               <LineTitle>Horas do dia:</LineTitle>
               <LineValue>
@@ -76,7 +90,7 @@ export const CardDetails = () => {
                 )}
               </LineValue>
             </CardItem>
-          )}
+          ) : null}
 
           {reportsInDay?.reportedActivities && (
             <CardItem>

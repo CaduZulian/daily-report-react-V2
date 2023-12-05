@@ -25,7 +25,10 @@ export const CardForm = () => {
   const { reportsInDay, uploadData, generateTxtFile } = useForm();
 
   async function handleSubmit(data: Record<string, string>) {
-    const response = uploadData(data);
+    const response = await uploadData({
+      comments: data.comments,
+      reportedActivities: data.reportedActivities,
+    });
 
     if (response?.reportedActivities && checkIsOfficeHourFinished) {
       generateTxtFile(response);
