@@ -7,7 +7,7 @@ import {
   ExportPageFormStyled,
 } from './styles';
 
-import { Button, DatePicker, TextArea } from '@/components';
+import { Button, DatePicker } from '@/components';
 
 import { ExportPageProps, IExportPageForm } from './models';
 

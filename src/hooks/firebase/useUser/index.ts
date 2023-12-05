@@ -11,6 +11,7 @@ import {
   getDocs,
 } from 'firebase/firestore';
 import { v4 } from 'uuid';
+import { toast } from 'react-toastify';
 
 import { firebaseDatabase } from '@/services/firebaseService';
 
@@ -104,11 +105,13 @@ export const useUser = () => {
         const docRef = doc(collectionRef, id);
 
         await updateDoc(docRef, {
-          ...rest,
+          ...rest.data,
           updatedAt: new Date(),
         });
 
         const response = await getDoc(docRef);
+
+        toast.success('Usuário atualizado com sucesso!');
 
         return response.data() as IUser;
       }

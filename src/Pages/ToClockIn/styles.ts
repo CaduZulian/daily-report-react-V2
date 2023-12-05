@@ -131,12 +131,10 @@ export const Helper = styled.div`
 
   right: 1.25rem;
   top: 1.25rem;
-  width: 28px;
-  height: 28px;
 
   img {
-    width: 20px;
-    height: 20px;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 `;
 

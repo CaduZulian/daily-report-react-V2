@@ -9,6 +9,7 @@ import {
 import { useAuth } from '@/context';
 
 import { Button } from '@/components';
+import { EditUserModal } from './components';
 
 import { useUser } from '@/hooks';
 
@@ -91,6 +92,12 @@ export const Profile = () => {
           </CardItemStyled>
         </div>
       </CardStyled>
+
+      <EditUserModal
+        isOpen={modalEditProfileIsOpen}
+        onClose={() => setModalEditProfileIsOpen(false)}
+        user={getUserById?.data}
+      />
     </ContainerStyled>
   );
 };

@@ -17,13 +17,13 @@ export const LabelContainer = styled.div`
 export const Label = styled.label`
   font-size: 1rem;
   line-height: 150%;
-  color: #212121;
+  color: ${({ theme }) => theme.palette.text.dark};
 `;
 
 export const Required = styled.span`
   font-size: 0.75rem;
   line-height: 150%;
-  color: #9e9e9e;
+  color: ${({ theme }) => theme.palette.text.gray};
 `;
 
 export const IconWrapper = styled.div<{ hasValue: boolean }>`
@@ -37,7 +37,7 @@ export const IconWrapper = styled.div<{ hasValue: boolean }>`
   height: 2rem;
 
   background: ${({ theme, hasValue }) =>
-    hasValue ? theme.palette.background.lightGray : theme.palette.primary.main};
+    hasValue ? theme.palette.main.primary : theme.palette.background.lightGray};
 `;
 
 export const Input = styled.div<{ hasError?: boolean; disabled?: boolean }>`
@@ -51,14 +51,14 @@ export const Input = styled.div<{ hasError?: boolean; disabled?: boolean }>`
 
   min-height: 140px;
 
-  &.holding {
-    background: ${({ theme }) => theme.palette.opacity.green};
-  }
-
-  border: dashed 1px
+  border: solid 1px
     ${({ hasError, theme }) =>
       hasError ? theme.palette.status.red : theme.palette.border.light};
   border-radius: 0.5rem;
+
+  &:focus-within {
+    border: solid 1px ${({ theme }) => theme.palette.main.primary};
+  }
 
   span {
     max-width: 80%;
@@ -66,7 +66,7 @@ export const Input = styled.div<{ hasError?: boolean; disabled?: boolean }>`
     font-size: 1rem;
     line-height: 150%;
     text-align: center;
-    color: #818798;
+    color: ${({ theme }) => theme.palette.text.dark};
 
     + span {
       margin: 0;
@@ -87,5 +87,5 @@ export const Input = styled.div<{ hasError?: boolean; disabled?: boolean }>`
 
 export const ErrorMessage = styled.p`
   font-size: 0.875rem;
-  color: ${({ theme }) => theme.palette.error.main};
+  color: ${({ theme }) => theme.palette.status.red};
 `;

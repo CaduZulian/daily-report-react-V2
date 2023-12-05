@@ -24,12 +24,12 @@ export const Input = styled(ReactInputMask)<{ hasError?: boolean }>`
     ${({ hasError, theme }) =>
       hasError ? theme.palette.status.red : theme.palette.border.light};
 
-  :focus-within {
-    border: solid 1px #3fcfa9;
+  &:focus-within {
+    border: solid 1px ${({ theme }) => theme.palette.main.primary};
   }
 
   :disabled {
-    background: #f3f5f7;
+    background: ${({ theme }) => theme.palette.background.light};
   }
 
   ::placeholder {

@@ -18,13 +18,13 @@ export const LabelContainer = styled.div`
 export const Label = styled.label`
   font-size: 1rem;
   line-height: 150%;
-  color: #212121;
+  color: ${({ theme }) => theme.palette.text.dark};
 `;
 
 export const Required = styled.span`
   font-size: 0.75rem;
   line-height: 150%;
-  color: #9e9e9e;
+  color: ${({ theme }) => theme.palette.text.gray};
 `;
 
 export const ErrorMessage = styled.p`

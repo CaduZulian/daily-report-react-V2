@@ -19,13 +19,13 @@ export const LabelContainer = styled.div`
 export const Label = styled.label`
   font-size: 1rem;
   line-height: 150%;
-  color: #212121;
+  color: ${({ theme }) => theme.palette.text.dark};
 `;
 
 export const Required = styled.span`
   font-size: 0.75rem;
   line-height: 150%;
-  color: #9e9e9e;
+  color: ${({ theme }) => theme.palette.text.gray};
 `;
 
 export const SelectInput = styled(Select)<{ hasError?: boolean }>`
@@ -52,7 +52,7 @@ export const SelectInput = styled(Select)<{ hasError?: boolean }>`
       @media screen and (min-width: 768px) {
         &:hover {
           border-color: ${({ hasError, theme }) =>
-            hasError ? theme.palette.error.main : theme.palette.primary.main};
+            hasError ? theme.palette.error.main : theme.palette.main.primary};
           border-size: 1px;
         }
       }

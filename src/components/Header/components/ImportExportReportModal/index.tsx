@@ -32,7 +32,7 @@ export const ImportExportReportModal = ({
         />
 
         {currentItem === 0 ? (
-          <ImportPage />
+          <ImportPage onClose={onClose} />
         ) : currentItem === 1 ? (
           <ExportPage onClose={onClose} />
         ) : null}
