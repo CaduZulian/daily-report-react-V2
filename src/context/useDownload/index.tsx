@@ -1,7 +1,6 @@
 import { createContext, useContext } from 'react';
 import { format, startOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 
-// types
 import { IDownload, IDownloadOfPeriod } from './models';
 
 const DownloadContext = createContext({} as IDownload);

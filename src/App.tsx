@@ -1,19 +1,16 @@
 import { ToastContainer } from 'react-toastify';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-// global styles
 import GlobalStyles from './styles/global';
 
-// themes
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 
-// pages
 import { Login, Home, ToClockIn, Profile } from './Pages';
 import { AuthLayout, DefaultLayout } from './Pages/_Layouts';
 
-// providers
 import { FormProvider, DownloadProvider, AuthProvider } from './context';
+
 import { ProtectedRoute } from './routes/ProtectedRoutes';
 
 function App() {

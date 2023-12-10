@@ -12,10 +12,11 @@ import {
   Title,
 } from '../../styles';
 
-// contexts
 import { useForm } from '@/context/useForm';
-import { getSignedUser } from '@/utils';
+
 import { useUser } from '@/hooks';
+
+import { getSignedUser } from '@/utils';
 
 export const CardDetails = () => {
   const signedUser = getSignedUser();

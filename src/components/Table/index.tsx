@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import {
   Card,
   Cell,
@@ -9,44 +11,10 @@ import {
   THeadStyled,
 } from './styles';
 
-import { useEffect, useState } from 'react';
-import { FaDownload } from 'react-icons/fa';
-import theme from '@/styles/theme';
+import { ITable } from './models';
 
-export type Columns = {
-  key: string;
-  label: string;
-  cardOrder: number;
-  responsiveStyles?: React.CSSProperties;
-  styles?: React.CSSProperties;
-  render?: (props: any) => React.ReactNode;
-}[];
-
-interface ITable {
-  columns: Columns;
-  tableKey: string;
-  data: any;
-  onDownload?: (item?: any) => void;
-  customActions?: {
-    icon: React.ReactElement;
-    callback: (row: any) => void;
-    tooltip: string;
-  }[];
-  maxIndex?: number;
-  maxIndexMobile?: number;
-}
-
-export const Table: React.FC<ITable> = ({
-  columns,
-  data,
-  tableKey,
-  onDownload,
-  customActions,
-  maxIndex,
-  maxIndexMobile,
-}) => {
+export const Table = ({ columns, data }: ITable) => {
   const [showCards, setShowCards] = useState(window.innerWidth <= 960);
-  const [maxHeight, setMaxHeight] = useState<number>();
 
   const cardColumns: ITable['columns'] = Object.create(columns);
 
@@ -71,41 +39,12 @@ export const Table: React.FC<ITable> = ({
   }
 
   useEffect(() => {
-    if (!showCards) {
-      if (maxIndex !== undefined && maxIndex <= data.length) {
-        const theadHeight = document.getElementById('rowThead')?.offsetHeight;
-
-        const rowHeight = document.getElementById(`${maxIndex}_row_${tableKey}`)
-          ?.offsetHeight;
-
-        if (rowHeight && theadHeight) {
-          setMaxHeight(
-            theadHeight +
-              rowHeight * maxIndex +
-              (maxIndex = data.length ? 2 : 0),
-          );
-        }
-      }
-    } else {
-      if (maxIndexMobile !== undefined && maxIndexMobile <= data.length) {
-        const rowHeight = document.getElementById(
-          `${maxIndexMobile}_card_${tableKey}`,
-        )?.offsetHeight;
-
-        if (rowHeight) {
-          setMaxHeight(rowHeight * maxIndexMobile + 4 * maxIndexMobile);
-        }
-      }
-    }
-  }, [maxIndex, maxIndexMobile, showCards]);
-
-  useEffect(() => {
     window.addEventListener('resize', handleResize);
 
     return () => {
       document.removeEventListener('resize', handleResize);
     };
-  });
+  }, []);
 
   function completeRowPath(row: any, key: string) {
     let finalData = row;
@@ -118,7 +57,7 @@ export const Table: React.FC<ITable> = ({
   }
 
   return (
-    <Container maxHeight={maxHeight}>
+    <Container>
       {!showCards ? (
         <TableStyled border={1}>
           <THeadStyled>
@@ -137,61 +76,24 @@ export const Table: React.FC<ITable> = ({
             {data.length > 0 &&
               data?.map((row: any, index: number) => {
                 return (
-                  <Row id={`${index + 1}_row_${tableKey}`} key={'row' + index}>
-                    <>
-                      {columns.map(({ key, styles, ...rest }, index) => {
-                        return (
-                          <Column key={'rowCell' + index} style={styles}>
-                            {rest.render ? (
-                              <Cell key={'rowCell' + index} style={styles}>
-                                {rest.render(row)}
-                              </Cell>
-                            ) : (
-                              <span key={'rowCell' + index}>
-                                {!key.includes('.')
-                                  ? row[key]
-                                  : completeRowPath(row, key)}
-                              </span>
-                            )}
-                          </Column>
-                        );
-                      })}
-
-                      {(onDownload || customActions) && (
-                        <Column>
-                          <div className='actions'>
-                            {onDownload && (
-                              <button
-                                type='button'
-                                data-tooltip='Fazer download'
-                                data-flow='top'
-                                onClick={() => onDownload(row)}
-                              >
-                                <FaDownload
-                                  color={theme.palette.action.primary}
-                                />
-                              </button>
-                            )}
-
-                            {customActions &&
-                              customActions.map(
-                                ({ tooltip, icon, callback }) => {
-                                  return (
-                                    <button
-                                      type='button'
-                                      data-tooltip={tooltip}
-                                      data-flow='top'
-                                      onClick={() => callback(row)}
-                                    >
-                                      {icon}
-                                    </button>
-                                  );
-                                },
-                              )}
-                          </div>
+                  <Row id={`${index + 1}_row`} key={'row' + index}>
+                    {columns.map(({ key, styles, ...rest }, index) => {
+                      return (
+                        <Column key={'rowCell' + index} style={styles}>
+                          {rest.render ? (
+                            <Cell key={'rowCell' + index} style={styles}>
+                              {rest.render(row)}
+                            </Cell>
+                          ) : (
+                            <span key={'rowCell' + index}>
+                              {!key.includes('.')
+                                ? row[key]
+                                : completeRowPath(row, key)}
+                            </span>
+                          )}
                         </Column>
-                      )}
-                    </>
+                      );
+                    })}
                   </Row>
                 );
               })}
@@ -201,13 +103,7 @@ export const Table: React.FC<ITable> = ({
         data.length > 0 &&
         data?.map((row: any, index: number) => {
           return (
-            <Card
-              id={`${index + 1}_card_${tableKey}`}
-              key={'card' + index}
-              onClick={() => {
-                onDownload && onDownload(row);
-              }}
-            >
+            <Card id={`${index + 1}_card`} key={'card' + index}>
               {cardColumns.map(({ key, responsiveStyles, ...rest }, index) => {
                 return (
                   <Cell key={'cardCell' + index} style={responsiveStyles}>
@@ -233,34 +129,6 @@ export const Table: React.FC<ITable> = ({
                   </Cell>
                 );
               })}
-              {(onDownload || customActions) && (
-                <div style={{ display: 'flex', gap: '48px' }}>
-                  {onDownload && (
-                    <button
-                      type='button'
-                      data-tooltip='Fazer download'
-                      data-flow='top'
-                      onClick={() => onDownload(row)}
-                    >
-                      <FaDownload />
-                    </button>
-                  )}
-
-                  {customActions &&
-                    customActions.map(({ tooltip, icon, callback }) => {
-                      return (
-                        <button
-                          type='button'
-                          data-tooltip={tooltip}
-                          data-flow='top'
-                          onClick={() => callback(row)}
-                        >
-                          {icon}
-                        </button>
-                      );
-                    })}
-                </div>
-              )}
             </Card>
           );
         })

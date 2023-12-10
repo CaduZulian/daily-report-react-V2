@@ -108,7 +108,9 @@ const FormProvider = ({ children }: FormProviderProps) => {
 
     // construction of file content by adding data to string to avoid unwanted formatting
 
-    fileData = fileData + `${data?.currentDate}\n\n`;
+    fileData =
+      fileData +
+      `${data?.currentDate.toDate().toLocaleDateString('pt-BR')}\n\n`;
 
     fileData = fileData + `Entradas:\n`;
 

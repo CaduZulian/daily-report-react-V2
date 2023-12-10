@@ -1,102 +1,69 @@
-import { useEffect, useState } from 'react';
-import { addHours, format } from 'date-fns';
+import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormStyled } from './styles';
 import { Card, Title } from '../../styles';
 
-// context
-import { useDownload, useForm } from '@/context';
-import { DailyReport } from '@/context/useForm/models';
+import { Button, DatePicker, Table } from '@/components';
 
-// components
-import Table from '@/components/Table';
+import { tableColumns } from './constants';
+
+import { useForm as useCustomForm } from '@/context';
+
+import { useDailyReport } from '@/hooks';
+
+import { IFilters } from './models';
 
 export const TableCard = () => {
-  const { downloadOfPeriod, getDaysOfMonth } = useDownload();
-  const { generateTxtFile } = useForm();
+  const { generateTxtFile } = useCustomForm();
+  const { useGetDailyReportList } = useDailyReport();
 
-  const [data, setData] = useState<DailyReport[]>([]);
+  const [filters, setFilters] = useState<IFilters>({
+    startDate: new Date(new Date().setDate(1)),
+    endDate: new Date(
+      new Date(new Date().setDate(1)).setMonth(new Date().getMonth() + 1) -
+        1000 * 60 * 60 * 24,
+    ),
+  });
 
-  const columns = [
-    {
-      key: 'currentDate',
-      label: 'Dia',
-      cardOrder: 1,
+  const filterForm = useForm({
+    defaultValues: {
+      startDate: filters.startDate,
+      endDate: filters.endDate,
     },
-    {
-      key: 'hoursInDay',
-      label: 'Horas feitas',
-      cardOrder: 2,
-      render: (e: DailyReport) => {
-        return e.hoursInDay
-          ? format(
-              addHours(
-                new Date(e?.hoursInDay),
-                new Date().getTimezoneOffset() / 60,
-              ),
-              'HH:mm',
-            )
-          : 0;
+  });
+
+  const getDailyReportList = useGetDailyReportList({ filters });
+
+  const columns = tableColumns({
+    actions: {
+      handleDownload: (e) => {
+        generateTxtFile(e);
       },
+      handleEdit: () => {},
+      handleShow: () => {},
     },
-    {
-      key: 'entry',
-      label: 'Entradas',
-      cardOrder: 3,
-      render: (e: DailyReport) => {
-        return e.entry
-          .map(({ horary }) => {
-            return horary;
-          })
-          .join(', ');
-      },
-    },
-    {
-      key: 'leaves',
-      label: 'Saidas',
-      cardOrder: 4,
-      render: (e: DailyReport) => {
-        return e.leaves
-          .map(({ horary }) => {
-            return horary;
-          })
-          .join(', ');
-      },
-    },
-  ];
+  });
 
-  const getData = () => {
-    const days = getDaysOfMonth();
-
-    let dataArray = [];
-
-    for (let date of days) {
-      if (localStorage.getItem(date)) {
-        dataArray.push(JSON.parse(localStorage.getItem(date)!));
-      }
-    }
-
-    setData(dataArray);
+  const handleFilter = (data: IFilters) => {
+    setFilters(data);
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <Card>
-      <Title>Relatórios disponíveis do mês atual</Title>
+      <Title>Relatórios disponíveis para download</Title>
 
-      <Table
-        tableKey='DAILY_REPORTS'
-        columns={columns}
-        data={data}
-        onDownload={(e: DailyReport) => {
-          downloadOfPeriod('daily', {
-            downloadFunction: generateTxtFile,
-            date: e.currentDate,
-          });
-        }}
-      />
+      <FormProvider {...filterForm}>
+        <FormStyled onSubmit={filterForm.handleSubmit(handleFilter)}>
+          <DatePicker name='startDate' label='Data inicial' />
+
+          <DatePicker name='endDate' label='Data final' />
+
+          <Button type='submit'>Filtrar</Button>
+        </FormStyled>
+      </FormProvider>
+
+      <Table columns={columns} data={getDailyReportList.data} />
     </Card>
   );
 };

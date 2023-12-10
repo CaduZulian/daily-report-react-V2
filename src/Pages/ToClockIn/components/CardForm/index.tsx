@@ -4,14 +4,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ButtonsGroup, Card, Form } from '../../styles';
 
-// contexts
 import { useForm } from '@/context/useForm';
 
-// components
 import { TextArea } from '@/components/Form';
 import { Checkbox, Button } from '@/components';
 
-// schema
 import { schema } from '../../validators';
 
 export const CardForm = () => {

@@ -36,11 +36,11 @@ export const Card = styled.div`
 
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 
-  padding: 1.25rem;
-  gap: 1rem;
+  padding: 1.5rem;
+  gap: 1.5rem;
 `;
 
-export const Title = styled.span`
+export const Title = styled.h4`
   text-align: center;
   font-size: 1.125rem;
   font-weight: bold;

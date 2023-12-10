@@ -4,7 +4,7 @@ export const StyledButton = styled.button<{ variant: 'primary' | 'secondary' }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
 
   background-color: ${({ theme, variant }) =>
     variant === 'primary'

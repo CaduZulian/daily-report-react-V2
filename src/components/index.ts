@@ -5,3 +5,4 @@ export * from './Form';
 export * from './Header';
 export * from './Modal';
 export * from './SlideButton';
+export * from './Table';

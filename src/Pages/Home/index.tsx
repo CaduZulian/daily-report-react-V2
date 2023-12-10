@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet';
 
 import { Column, Container, Row } from './styles';
 
-// components
 import { HoursBalanceCard } from './components/HoursBalanceCard';
 import { OvertimeCard } from './components/OvertimeCard';
 import { TableCard } from './components/TableCard';
@@ -18,9 +17,9 @@ export const Home = () => {
         <TableCard />
 
         <Column>
-          <OvertimeCard />
-
           <HoursBalanceCard />
+
+          <OvertimeCard />
         </Column>
       </Row>
     </Container>
