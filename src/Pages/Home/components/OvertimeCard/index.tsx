@@ -25,7 +25,7 @@ export const OvertimeCard = () => {
   const { useGetUserById } = useUser();
 
   const getUserById = useGetUserById({
-    userId: signedUser?.id,
+    userId: signedUser?.id ?? '',
   });
 
   function getData(type: 'weekly' | 'monthly') {

@@ -20,7 +20,7 @@ export const Chart = ({ currentPeriod }: IChart) => {
   const [filters, setFilters] = useState<IFilters>();
 
   const getUserById = useGetUserById({
-    userId: signedUser?.id,
+    userId: signedUser?.id ?? '',
   });
   const getDailyReportList = useGetDailyReportList({
     filters,

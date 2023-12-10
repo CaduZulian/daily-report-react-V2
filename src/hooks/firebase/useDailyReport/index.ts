@@ -64,7 +64,7 @@ export const useDailyReport = () => {
 
     useEffect(() => {
       const filtersQueryAcc: QueryConstraint[] = [
-        where('userId', '==', signedUser?.id),
+        where('userId', '==', signedUser?.id ?? ''),
       ];
 
       if (params?.filters?.startDate) {
@@ -109,7 +109,7 @@ export const useDailyReport = () => {
 
       const findDailyReportQuery = query(
         collectionRef,
-        where('userId', '==', signedUser?.id),
+        where('userId', '==', signedUser?.id ?? ''),
         where('currentDate', '==', params.data.currentDate),
       );
 
