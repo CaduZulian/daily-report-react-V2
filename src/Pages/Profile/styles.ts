@@ -71,7 +71,7 @@ export const CardStyled = styled.section`
 
   width: 100%;
 
-  padding: 1rem;
+  padding: 2rem;
   gap: 2rem;
 
   background-color: ${({ theme }) => theme.palette.background.white};

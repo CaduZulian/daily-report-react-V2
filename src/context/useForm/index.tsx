@@ -207,7 +207,6 @@ const FormProvider = ({ children }: FormProviderProps) => {
   const uploadData: IForm['uploadData'] = async (data) => {
     let formattedData: DailyReport | undefined;
 
-    const date = format(new Date(), 'dd/MM/yyyy');
     let entry: DailyReport['entry'] = [];
     let leaves: DailyReport['leaves'] = [];
     let hoursInDay: DailyReport['hoursInDay'];
@@ -256,8 +255,6 @@ const FormProvider = ({ children }: FormProviderProps) => {
         },
       });
     }
-
-    localStorage.setItem(date, JSON.stringify(formattedData));
 
     return formattedData;
   };
