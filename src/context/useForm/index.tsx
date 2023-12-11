@@ -170,48 +170,44 @@ const FormProvider = ({ children }: FormProviderProps) => {
   ) {
     let result;
 
-    if (reportsInDay) {
-      for (let i = 0; i < leaves.length; i++) {
-        let currentEntry = entry[i].horary
-          .split(':')
-          .map((item) => Number(item));
-        let currentLeave = leaves[i].horary
-          .split(':')
-          .map((item) => Number(item));
+    for (let i = 0; i < leaves.length; i++) {
+      let currentEntry = entry[i].horary.split(':').map((item) => Number(item));
+      let currentLeave = leaves[i].horary
+        .split(':')
+        .map((item) => Number(item));
 
-        const currentEntryMilliseconds = new Date().setHours(
-          currentEntry[0],
-          currentEntry[1],
-          0,
-          0,
-        );
-        const currentLeavesMilliseconds = new Date().setHours(
-          currentLeave[0],
-          currentLeave[1],
-          0,
-          0,
-        );
+      const currentEntryMilliseconds = new Date().setHours(
+        currentEntry[0],
+        currentEntry[1],
+        0,
+        0,
+      );
+      const currentLeavesMilliseconds = new Date().setHours(
+        currentLeave[0],
+        currentLeave[1],
+        0,
+        0,
+      );
 
-        result = result
-          ? new Date(currentLeavesMilliseconds).getTime() -
-            new Date(currentEntryMilliseconds).getTime() +
-            result
-          : new Date(currentLeavesMilliseconds).getTime() -
-            new Date(currentEntryMilliseconds).getTime();
-      }
+      result = result
+        ? new Date(currentLeavesMilliseconds).getTime() -
+          new Date(currentEntryMilliseconds).getTime() +
+          result
+        : new Date(currentLeavesMilliseconds).getTime() -
+          new Date(currentEntryMilliseconds).getTime();
     }
 
     return result;
   }
 
-  const uploadData: IForm['uploadData'] = async (data) => {
+  const uploadData: IForm['uploadData'] = async (data, isBatch = false) => {
     let formattedData: DailyReport | undefined;
 
     let entry: DailyReport['entry'] = [];
     let leaves: DailyReport['leaves'] = [];
     let hoursInDay: DailyReport['hoursInDay'];
 
-    if (reportsInDay) {
+    if (reportsInDay && !isBatch) {
       if (reportsInDay.entry.length > reportsInDay.leaves.length) {
         entry = reportsInDay.entry;
         leaves = [
@@ -246,13 +242,15 @@ const FormProvider = ({ children }: FormProviderProps) => {
 
       formattedData = await postCreateDailyReport.createDailyReport({
         data: {
-          currentDate: new Date(new Date().setHours(0, 0, 0, 0)),
+          currentDate:
+            data.currentDate ?? new Date(new Date().setHours(0, 0, 0, 0)),
           entry: data.entry ?? entry,
           leaves: data.leaves ?? [],
           hoursInDay: data.hoursInDay ?? 0,
           comments: data.comments ?? '',
           reportedActivities: data.reportedActivities ?? '',
         },
+        isBatch,
       });
     }
 
@@ -265,6 +263,7 @@ const FormProvider = ({ children }: FormProviderProps) => {
         reportsInDay,
         getReportsInDay,
         generateTxtFile,
+        getHoursInDay,
         uploadData,
         leaveTime,
       }}

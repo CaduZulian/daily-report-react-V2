@@ -26,6 +26,7 @@ export interface IPostCreateDailyReportParams {
   > & {
     currentDate: Date;
   };
+  isBatch?: boolean;
 }
 
 export interface IPostCreateDailyReportResponse {

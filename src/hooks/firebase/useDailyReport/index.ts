@@ -94,7 +94,7 @@ export const useDailyReport = () => {
 
         setDailyReportList(dailyReportList);
       });
-    }, [JSON.stringify(filtersQuery)]);
+    }, [JSON.stringify(filtersQuery), dailyReportList.length]);
 
     const response: IGetDailyReportListResponse = {
       data: dailyReportList,
@@ -132,7 +132,7 @@ export const useDailyReport = () => {
 
       const response = await getDoc(doc(collectionRef, id));
 
-      toast.success('Relatório diário criado com sucesso!');
+      !params.isBatch && toast.success('Relatório diário criado com sucesso!');
 
       return response.data() as DailyReport;
     };

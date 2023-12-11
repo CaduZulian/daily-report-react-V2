@@ -30,8 +30,8 @@ export const Card = styled.div`
 
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 
-  padding: 1.25rem;
-  gap: 1rem;
+  padding: 1.5rem;
+  gap: 1.5rem;
 
   [data-tooltip] {
     position: absolute;
@@ -129,8 +129,8 @@ export const Helper = styled.div`
   justify-content: center;
   position: absolute;
 
-  right: 1.25rem;
-  top: 1.25rem;
+  right: 1.5rem;
+  top: 1.5rem;
 
   img {
     width: 1.5rem;

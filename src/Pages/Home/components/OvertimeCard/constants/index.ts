@@ -1,7 +1,7 @@
 import theme from '@/styles/theme';
 
 export const filters = {
-  startDate: new Date(new Date().setDate(1)),
+  startDate: new Date(new Date(new Date().setHours(0, 0, 0, 0)).setDate(1)),
   endDate: new Date(
     new Date(new Date().setDate(1)).setMonth(new Date().getMonth() + 1) -
       1000 * 60 * 60 * 24,
