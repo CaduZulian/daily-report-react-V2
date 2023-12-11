@@ -3,7 +3,7 @@ import { DailyReport } from '@/@types';
 export type customDailyReport = Partial<
   Omit<DailyReport, 'id' | 'createdAt' | 'updatedAt' | 'userId'>
 > & {
-  currentDate: Date;
+  currentDate?: Date;
 };
 export interface IForm {
   reportsInDay: DailyReport | undefined;
