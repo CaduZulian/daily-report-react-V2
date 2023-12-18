@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FormProvider, useForm as HookFormUseForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { ButtonsGroup, Card, Form } from '../../styles';
+import { ButtonsGroup, CardStyled, Form } from '../../styles';
 
 import { useForm } from '@/context/useForm';
 
@@ -33,7 +33,7 @@ export const CardForm = () => {
   }
 
   return (
-    <Card>
+    <CardStyled>
       <FormProvider {...formData}>
         <Form onSubmit={formData.handleSubmit(handleSubmit)}>
           <TextArea
@@ -64,6 +64,6 @@ export const CardForm = () => {
           </ButtonsGroup>
         </Form>
       </FormProvider>
-    </Card>
+    </CardStyled>
   );
 };

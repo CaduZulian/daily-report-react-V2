@@ -1,3 +1,4 @@
+import { Card } from '@/components';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -18,20 +19,8 @@ export const Row = styled.div`
   gap: 1rem;
 `;
 
-export const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: fit-content;
+export const CardStyled = styled(Card)`
   position: relative;
-
-  background-color: ${({ theme }) => theme.palette.background.white};
-  border-radius: 0.5rem;
-
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-
-  padding: 1.5rem;
-  gap: 1.5rem;
 
   [data-tooltip] {
     position: absolute;
@@ -110,7 +99,7 @@ export const Form = styled.form`
 
   width: 100%;
 
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 
 export const ButtonsGroup = styled.div`

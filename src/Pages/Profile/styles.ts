@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Card } from '@/components';
 
 export const ContainerStyled = styled.section`
   display: flex;
@@ -65,21 +66,7 @@ export const HeaderStyled = styled.div`
   }
 `;
 
-export const CardStyled = styled.section`
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-
-  padding: 1.5rem;
-  gap: 2rem;
-
-  background-color: ${({ theme }) => theme.palette.background.white};
-
-  border-radius: 0.5rem;
-
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-
+export const CardStyled = styled(Card)`
   h4 {
     font-size: 1.25rem;
     font-weight: 600;

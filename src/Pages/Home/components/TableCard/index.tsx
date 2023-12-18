@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { FormStyled } from './styles';
-import { Card, Title } from '../../styles';
+import { Title } from '../../styles';
 
-import { Button, DatePicker, Table } from '@/components';
+import { Button, Card, DatePicker, Table } from '@/components';
 
 import { tableColumns } from './constants';
 
@@ -12,12 +12,27 @@ import { useForm as useCustomForm } from '@/context';
 
 import { useDailyReport } from '@/hooks';
 
-import { IFilters } from './models';
+import {
+  IEditDailyReportModalProps,
+  IFilters,
+  IShowDailyReportModalProps,
+} from './models';
+import { EditDailyReportModal, ShowDailyReportModal } from '../Modal';
 
 export const TableCard = () => {
   const { generateTxtFile } = useCustomForm();
   const { useGetDailyReportList } = useDailyReport();
 
+  const [showDailyReportModalProps, setShowDailyReportModalProps] =
+    useState<IShowDailyReportModalProps>({
+      isOpen: false,
+      dailyReport: undefined,
+    });
+  const [editDailyReportModalProps, setEditDailyReportModalProps] =
+    useState<IEditDailyReportModalProps>({
+      isOpen: false,
+      dailyReport: undefined,
+    });
   const [filters, setFilters] = useState<IFilters>({
     startDate: new Date(new Date(new Date().setHours(0, 0, 0, 0)).setDate(1)),
     endDate: new Date(
@@ -40,8 +55,18 @@ export const TableCard = () => {
       handleDownload: (e) => {
         generateTxtFile(e);
       },
-      handleEdit: () => {},
-      handleShow: () => {},
+      handleEdit: (data) => {
+        setEditDailyReportModalProps({
+          isOpen: true,
+          dailyReport: data,
+        });
+      },
+      handleShow: (data) => {
+        setShowDailyReportModalProps({
+          isOpen: true,
+          dailyReport: data,
+        });
+      },
     },
   });
 
@@ -64,6 +89,28 @@ export const TableCard = () => {
       </FormProvider>
 
       <Table columns={columns} data={getDailyReportList.data} />
+
+      <ShowDailyReportModal
+        isOpen={showDailyReportModalProps.isOpen}
+        dailyReport={showDailyReportModalProps.dailyReport}
+        onClose={() => {
+          setShowDailyReportModalProps({
+            isOpen: false,
+            dailyReport: undefined,
+          });
+        }}
+      />
+
+      <EditDailyReportModal
+        isOpen={editDailyReportModalProps.isOpen}
+        dailyReport={editDailyReportModalProps.dailyReport}
+        onClose={() => {
+          setEditDailyReportModalProps({
+            isOpen: false,
+            dailyReport: undefined,
+          });
+        }}
+      />
     </Card>
   );
 };

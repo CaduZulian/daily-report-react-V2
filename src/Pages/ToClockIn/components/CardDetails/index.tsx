@@ -2,7 +2,7 @@ import { addHours, format } from 'date-fns';
 import HelperIcon from '@/assets/icons/help-circle.svg';
 
 import {
-  Card,
+  CardStyled,
   CardItem,
   Helper,
   LineTitle,
@@ -27,7 +27,7 @@ export const CardDetails = () => {
   const getUserById = useGetUserById({ userId: signedUser?.id ?? '' });
 
   return (
-    <Card>
+    <CardStyled>
       <Helper
         data-tooltip={
           !leaveTime
@@ -118,6 +118,6 @@ export const CardDetails = () => {
           <LineValue>Nenhuma atividade foi registrada nesse dia</LineValue>
         </div>
       )}
-    </Card>
+    </CardStyled>
   );
 };

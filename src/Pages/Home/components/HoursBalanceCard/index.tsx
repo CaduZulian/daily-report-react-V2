@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import { Container } from './styles';
-import { Card, Title } from '../../styles';
+import { Title } from '../../styles';
 
+import { Card } from '@/components';
 import { Chart } from './components/Chart';
 import { Steps } from './components/Steps';
 

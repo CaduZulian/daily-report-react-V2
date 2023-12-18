@@ -2,7 +2,6 @@ import 'chart.js/auto';
 import { useCallback, useMemo } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
-import { Card } from '../../styles';
 import {
   CardsGroup,
   ChartsGroup,
@@ -13,6 +12,8 @@ import {
 import { filters, config, data } from './constants';
 
 import { useDownload } from '@/context';
+
+import { Card } from '@/components';
 
 import { useDailyReport, useUser } from '@/hooks';
 

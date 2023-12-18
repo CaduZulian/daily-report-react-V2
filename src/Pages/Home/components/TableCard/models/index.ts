@@ -12,3 +12,13 @@ export interface IFilters {
   startDate: Date;
   endDate: Date;
 }
+
+export interface IShowDailyReportModalProps {
+  isOpen: boolean;
+  dailyReport?: DailyReport;
+}
+
+export interface IEditDailyReportModalProps {
+  isOpen: boolean;
+  dailyReport?: DailyReport;
+}
