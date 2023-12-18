@@ -7,9 +7,9 @@ import {
   EditDailyReportFormStyled,
 } from './styles';
 
-import { Button, MaskedInput, Modal, TextArea } from '@/components';
+import { Button, Modal, TextArea } from '@/components';
 
-import { useDailyReport, useUser } from '@/hooks';
+import { useDailyReport } from '@/hooks';
 
 import { EditDailyReportModalProps, IEditDailyReportForm } from './models';
 
