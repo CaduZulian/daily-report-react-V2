@@ -1,13 +1,17 @@
 import { useEffect } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { FiPlus, FiTrash } from 'react-icons/fi';
 
 import {
   EditDailyReportButtonsGroupStyled,
   EditDailyReportFormStyled,
+  EditDailyReportInputGroupStyled,
 } from './styles';
 
-import { Button, Modal, TextArea } from '@/components';
+import { useForm as useFormContext } from '@/context';
+
+import { Button, MaskedInput, Modal, TextArea } from '@/components';
 
 import { useDailyReport } from '@/hooks';
 
@@ -24,6 +28,26 @@ export const EditDailyReportModal = ({
     resolver: yupResolver(editDailyReportSchema),
   });
 
+  const { getHoursInDay } = useFormContext();
+
+  const {
+    fields: entriesFields,
+    append: entriesAppend,
+    remove: entriesRemove,
+  } = useFieldArray({
+    control: editDailyReportForm.control,
+    name: 'entry' as never,
+  });
+
+  const {
+    fields: leavesFields,
+    append: leavesAppend,
+    remove: leavesRemove,
+  } = useFieldArray({
+    control: editDailyReportForm.control,
+    name: 'leaves' as never,
+  });
+
   const { usePutUpdateDailyReport } = useDailyReport();
 
   const putUpdateDailyReport = usePutUpdateDailyReport();
@@ -31,12 +55,13 @@ export const EditDailyReportModal = ({
   const handleSubmit = async (data: IEditDailyReportForm) => {
     if (!dailyReport) return;
 
+    const hoursInDay = getHoursInDay(data.entry, data.leaves) ?? 0;
+
     const response = await putUpdateDailyReport.updateDailyReport({
       id: dailyReport.id,
       data: {
         ...data,
-        reportedActivities: data.reportedActivities,
-        comments: data.comments,
+        hoursInDay,
       },
     });
 
@@ -48,8 +73,16 @@ export const EditDailyReportModal = ({
   useEffect(() => {
     if (!isOpen) {
       editDailyReportForm.reset();
+
+      entriesRemove();
+      leavesRemove();
     } else if (dailyReport) {
+      entriesAppend(dailyReport.entry);
+      leavesAppend(dailyReport.leaves);
+
       editDailyReportForm.reset({
+        entry: dailyReport.entry,
+        leaves: dailyReport.leaves,
         reportedActivities: dailyReport.reportedActivities,
         comments: dailyReport.comments,
       });
@@ -68,6 +101,70 @@ export const EditDailyReportModal = ({
         <EditDailyReportFormStyled
           onSubmit={editDailyReportForm.handleSubmit(handleSubmit)}
         >
+          <EditDailyReportInputGroupStyled>
+            <div className='title'>
+              <h4>Entradas</h4>
+
+              <button
+                type='button'
+                onClick={() => entriesAppend({ horary: '' })}
+              >
+                <FiPlus />
+                Adicionar
+              </button>
+            </div>
+
+            {entriesFields.map((field, index) => (
+              <div className='input-group' key={field.id}>
+                <MaskedInput
+                  name={`entry[${index}].horary`}
+                  label={`${index + 1}º entrada`}
+                  mask='99:99'
+                />
+
+                <button
+                  type='button'
+                  onClick={() => entriesRemove(index)}
+                  disabled={!!dailyReport?.entry?.[index]?.horary}
+                >
+                  <FiTrash />
+                </button>
+              </div>
+            ))}
+          </EditDailyReportInputGroupStyled>
+
+          <EditDailyReportInputGroupStyled>
+            <div className='title'>
+              <h4>Saídas</h4>
+
+              <button
+                type='button'
+                onClick={() => leavesAppend({ horary: '' })}
+              >
+                <FiPlus />
+                Adicionar
+              </button>
+            </div>
+
+            {leavesFields.map((field, index) => (
+              <div className='input-group' key={field.id}>
+                <MaskedInput
+                  name={`leaves[${index}].horary`}
+                  label={`${index + 1}º saída`}
+                  mask='99:99'
+                />
+
+                <button
+                  type='button'
+                  onClick={() => leavesRemove(index)}
+                  disabled={!!dailyReport?.leaves?.[index]?.horary}
+                >
+                  <FiTrash />
+                </button>
+              </div>
+            ))}
+          </EditDailyReportInputGroupStyled>
+
           <TextArea name='reportedActivities' label='Atividades do dia' />
 
           <TextArea name='comments' label='Observações' />
