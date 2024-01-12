@@ -6,8 +6,8 @@ import GlobalStyles from './styles/global';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 
-import { Login, Home, ToClockIn, Profile } from './pagess';
-import { AuthLayout, DefaultLayout } from './pagess/_Layouts';
+import { Login, Home, ToClockIn, Profile } from './pages';
+import { AuthLayout, DefaultLayout } from './pages/_Layouts';
 
 import { FormProvider, DownloadProvider, AuthProvider } from './context';
 
