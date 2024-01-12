@@ -103,7 +103,12 @@ const FormProvider = ({ children }: FormProviderProps) => {
     });
   };
 
-  const generateTxtFile: IForm['generateTxtFile'] = (data) => {
+  const generateTxtFile: IForm['generateTxtFile'] = (
+    data,
+    options = {
+      isDownload: true,
+    },
+  ) => {
     let fileData = '';
 
     // construction of file content by adding data to string to avoid unwanted formatting
@@ -156,12 +161,16 @@ const FormProvider = ({ children }: FormProviderProps) => {
 
     const blob = new Blob([fileData], { type: 'text/plain' });
 
-    return download({
-      blob,
-      filename: `dia ${new Date(data.currentDate.toDate())
-        .toLocaleDateString('pt-BR')
-        .slice(0, 2)}`,
-    });
+    if (options?.isDownload) {
+      download({
+        blob,
+        filename: `dia ${new Date(data.currentDate.toDate())
+          .toLocaleDateString('pt-BR')
+          .slice(0, 2)}`,
+      });
+    }
+
+    return blob;
   };
 
   function getHoursInDay(

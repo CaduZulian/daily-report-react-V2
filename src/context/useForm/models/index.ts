@@ -8,7 +8,12 @@ export type customDailyReport = Partial<
 export interface IForm {
   reportsInDay: DailyReport | undefined;
   getReportsInDay: (day: Date) => void;
-  generateTxtFile: (data: DailyReport) => void;
+  generateTxtFile: (
+    data: DailyReport,
+    options?: {
+      isDownload?: boolean;
+    },
+  ) => Blob;
   uploadData: (
     data: customDailyReport,
     isBatch?: boolean,

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CheckBoxContainer = styled.div<{
   check: boolean;
-  disabled: boolean;
+  disabled?: boolean;
 }>`
   display: flex;
   justify-content: flex-start;

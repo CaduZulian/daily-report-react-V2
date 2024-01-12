@@ -36,7 +36,7 @@ export const EditDailyReportModal = ({
     remove: entriesRemove,
   } = useFieldArray({
     control: editDailyReportForm.control,
-    name: 'entry' as never,
+    name: 'entry',
   });
 
   const {
@@ -45,7 +45,7 @@ export const EditDailyReportModal = ({
     remove: leavesRemove,
   } = useFieldArray({
     control: editDailyReportForm.control,
-    name: 'leaves' as never,
+    name: 'leaves',
   });
 
   const { usePutUpdateDailyReport } = useDailyReport();
@@ -117,8 +117,9 @@ export const EditDailyReportModal = ({
             {entriesFields.map((field, index) => (
               <div className='input-group' key={field.id}>
                 <MaskedInput
-                  name={`entry[${index}].horary`}
+                  name={`entry.${index}.horary`}
                   label={`${index + 1}º entrada`}
+                  defaultValue={field.horary}
                   mask='99:99'
                 />
 
@@ -149,8 +150,9 @@ export const EditDailyReportModal = ({
             {leavesFields.map((field, index) => (
               <div className='input-group' key={field.id}>
                 <MaskedInput
-                  name={`leaves[${index}].horary`}
+                  name={`leaves.${index}.horary`}
                   label={`${index + 1}º saída`}
+                  defaultValue={field.horary}
                   mask='99:99'
                 />
 

@@ -103,6 +103,50 @@ export const useDailyReport = () => {
     return response;
   };
 
+  const useGetAsyncDailyReportList = () => {
+    const getData = async (params: IGetDailyReportListParams) => {
+      const signedUser = getSignedUser();
+
+      const filtersQueryAcc: QueryConstraint[] = [
+        where('userId', '==', signedUser?.id ?? ''),
+      ];
+
+      if (params?.filters?.startDate) {
+        filtersQueryAcc.push(
+          where('currentDate', '>=', params?.filters?.startDate),
+        );
+      }
+
+      if (params?.filters?.endDate) {
+        filtersQueryAcc.push(
+          where('currentDate', '<=', params?.filters?.endDate),
+        );
+      }
+
+      const queryDailyReport = query(collectionRef, ...filtersQueryAcc);
+
+      const querySnapshot = await getDocs(queryDailyReport);
+
+      const dailyReportList: DailyReport[] = [];
+
+      querySnapshot.forEach((doc) => {
+        dailyReportList.push(doc.data() as DailyReport);
+      });
+
+      const response: IGetDailyReportListResponse = {
+        data: dailyReportList,
+      };
+
+      return response;
+    };
+
+    const response = {
+      getData: getData,
+    };
+
+    return response;
+  };
+
   const usePostCreateDailyReport = () => {
     const createDailyReport = async (params: IPostCreateDailyReportParams) => {
       const signedUser = getSignedUser();
@@ -181,6 +225,7 @@ export const useDailyReport = () => {
   return {
     useGetDailyReportById,
     useGetDailyReportList,
+    useGetAsyncDailyReportList,
     usePostCreateDailyReport,
     usePutUpdateDailyReport,
   };

@@ -1,6 +1,6 @@
 export interface CheckboxProps {
   checked: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   onClick: (event: boolean) => void;
   label?: string;
 }
