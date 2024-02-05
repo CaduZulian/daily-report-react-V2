@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm as HookFormUseForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -31,6 +31,23 @@ export const CardForm = () => {
       generateTxtFile(response);
     }
   }
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (checkIsOfficeHourFinished) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+
+    if (checkIsOfficeHourFinished) {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [checkIsOfficeHourFinished]);
 
   return (
     <CardStyled>
