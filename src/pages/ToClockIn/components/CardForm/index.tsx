@@ -23,8 +23,10 @@ export const CardForm = () => {
 
   async function handleSubmit(data: Record<string, string>) {
     const response = await uploadData({
-      comments: data.comments,
-      reportedActivities: data.reportedActivities,
+      comments: data.comments ? data.comments : undefined,
+      reportedActivities: data.reportedActivities
+        ? data.reportedActivities
+        : undefined,
     });
 
     if (response?.reportedActivities && checkIsOfficeHourFinished) {
